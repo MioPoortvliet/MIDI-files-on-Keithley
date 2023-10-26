@@ -2,7 +2,6 @@ import pretty_midi
 from pymeasure.instruments.keithley import Keithley2400
 from pymeasure.adapters import VISAAdapter
 from librosa import midi_to_hz
-import numpy as np
 from datetime import datetime
 from time import sleep
 device_adres="COM43"
