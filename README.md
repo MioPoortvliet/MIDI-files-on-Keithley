@@ -3,6 +3,6 @@
  Play midi files with the keithley buzzer as instrument.
  
 # Dependencies:
-pretty_midi
-pymeasure
-librosa
+- pretty_midi
+- pymeasure
+- librosa
