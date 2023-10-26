@@ -12,7 +12,7 @@ kl = Keithley2400(instrument)
 #fname = 'running_in_90s.mid' # Instrument: 2
 fname="smbt.mid" # Instrument: 0
 
-def play_midi_on_keithley(fname, instrument=0, device=kl):
+def play_midi_on_keithley(fname, instrument_nr=0, device=kl):
     """Should edit this such that multi-voice is supported"""
     midi_data = pretty_midi.PrettyMIDI(fname)
     print("duration:",midi_data.get_end_time())
@@ -20,18 +20,18 @@ def play_midi_on_keithley(fname, instrument=0, device=kl):
     start_time = datetime.now()
     current_note_end = 0
     print(midi_data.instruments)
-    for instrument in midi_data.instruments:
-        print("instrument:", instrument.program);
-        for note in instrument.notes:
-            print(note.pitch, note.start, note.end)
-            note_hz = midi_to_hz(note.pitch)
-            time_delta = datetime.now() - start_time
-            if note.start >= current_note_end:
-                sleep(note.start - current_note_end)
-                #print(f"note_hz: {note_hz}")
-                kl.beep(note_hz, note.end-note.start)
-                sleep(note.end-note.start)
-                current_note_end = note.end
+    instrument = midi_data.instruments[instrument_nr]
+    print("instrument:", instrument.program);
+    for note in instrument.notes:
+        print(note.pitch, note.start, note.end)
+        note_hz = midi_to_hz(note.pitch)
+        time_delta = datetime.now() - start_time
+        if note.start >= current_note_end:
+            sleep(note.start - current_note_end)
+            #print(f"note_hz: {note_hz}")
+            kl.beep(note_hz, note.end-note.start)
+            sleep(note.end-note.start)
+            current_note_end = note.end
                 
 if __name__ == "__main__":
     play_midi_on_keithley(fname)
